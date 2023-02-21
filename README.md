@@ -1,2 +1,2 @@
-# site teste
- um teste de site para testar meus conhecimentos 
+# memory-game
+ um jogo da memória feito em HTML, CSS e JavaScript para testar meus conhecimentos
