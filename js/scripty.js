@@ -15,6 +15,7 @@ function start(num, anima){
     game = document.getElementById('game')
     var start = document.getElementById('istart')
     var again = document.querySelector('.playAgain')
+    
 
     start.style.display = 'none'
     again.style.display = 'none'
@@ -84,14 +85,19 @@ function cardsTurned(){
     return turn
 }
 
+var newPair = 0
 function turn(idCard){
     let cardTurn = document.getElementById(`backCardDiv${idCard}`)
+    let cardFlipSound = document.querySelector('#cardFlipId')
+    let pairSound = document.querySelector('#pairAudioId')
+    let winSound = document.querySelector('#winAudioId')
 
     var controlTurn = cardsTurned()
     cardsUpMax = Number(pair()) * 2 + 2
 
     if (cards[idCard][1] == 0 && controlTurn[1] < cardsUpMax){
             cardTurn.setAttribute('style', 'z-index: -1;')
+            //  cardFlipSound.play()
             cards[idCard][1]++
     } else if (controlTurn[1] == cardsUpMax){
         for(c=0;c<numCards;c++){
@@ -102,8 +108,14 @@ function turn(idCard){
         }
     }
 
+    if(newPair < pair()) {
+        pairSound.play()
+        newPair = pair()
+    }
+
     if (controlTurn[1] == numCards - 1){
         game.id = 'menu'
+        winSound.play()
         let again = document.getElementById('iPlayAgain')
         again.style.display = 'inline-block'
         
@@ -131,5 +143,6 @@ function reset(){
     images = {}
     cards = {}
     cardsUpMax = 2
+    newPair = 0
     game.innerHTML = `<input type="button" value="Start" onclick="start(${numCards}, [${animalsStr}])" class="button start" id="istart"><input type="button" value="Play Again" onclick="reset()"class="button playAgain" id="iPlayAgain">`
 }
